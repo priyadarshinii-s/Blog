@@ -8,18 +8,3 @@ body {
   background-color: rgb(25, 25, 25);
   color: white;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-h1{
-  padding: 50px;
-  text-align: center;
-  color: rgb(255, 255, 255);
-}
-h2{
-  color: aqua;
-  margin-left: 30px;
-}
