@@ -44,7 +44,8 @@ app.post('/auth/login', async(req,res)=>{
         if(!user || !passwordMatched){
             res.status(401).json({message: "Invaild username/password"});
         }
-        res.json({username: user.username});
+
+        res.json({username: user.username, message: "valid-user"});
     }catch(e){
         res.status(402).json({message: "Server Error"});
     }
@@ -79,9 +80,17 @@ app.post('/auth/signup', async(req,res) =>{
 
 //List all the users
 app.get('/user', async(req,res)=>{
-    let users = await User.find();
-
-    res.json(users);
+    let userName = req.query.name;
+    try{
+    let user = await User.findOne({username: userName});
+    if(user)
+        res.status(201).json(user);
+    else
+        res.status(404).json({message: "User not found"}); 
+    }
+    catch(e){
+        res.status(402).json({message: "Server Error"});
+    }
 })
 
 
