@@ -1,0 +1,29 @@
+.overall-div{
+    height: 90px;
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo-div{
+    background-color: rgb(255, 0, 0);
+    height: 50px;
+    width: 120px;
+}
+
+.route-div{
+    background-color: rgb(255, 0, 0);
+    height: 50px;
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+}
+
+.pro-div{
+    background-color: rgb(255, 0, 0);
+    height: 50px;
+    width: 250px;
+}
