@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 
+var months = [ "January", "February", "March", "April", "May", "June", 
+           "July", "August", "September", "October", "November", "December" ];
+
 //Intiating Express Server
 const app = express();
 
@@ -21,7 +24,8 @@ mongoose.connect(dbUrl);
 //Schema structure
 const userSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    joined: String
 });
 
 
@@ -55,6 +59,9 @@ app.post('/auth/login', async(req,res)=>{
 app.post('/auth/signup', async(req,res) =>{
     let userName = req.body.username;
     let passWord = req.body.password; 
+    let join = req.body.joined;
+    let j = join.split(',');
+    let joinDate = `${j[0]} ${months[ j[1] - 1 ]} ${j[2]}`;
     
     //Hashing the password for security purpose
     const hashedPassword = await  bcrypt.hash(passWord, 10);
@@ -67,7 +74,8 @@ app.post('/auth/signup', async(req,res) =>{
         else{
             let newUser = new User({
                 username: userName,
-                password: hashedPassword
+                password: hashedPassword,
+                joined: joinDate
             });
             await newUser.save().then(()=>{
                 res.json({message: "registered"});

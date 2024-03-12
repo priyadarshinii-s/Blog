@@ -7,13 +7,13 @@ import Follow from './follow';
 
 
 const Profilepage = () => {
-    const [isProfile, setProfile] = useState(false);
+    const [isProfile, setProfile] = useState(true);
     const [isSaved, setSaved] = useState(false);
     const [isFollowing, setFollowing] = useState(false);
 
+
     return (
         <div className="main-div-ele">
-
             <div className='changable-div'>
                 {isProfile &&
                 <Profile/>
@@ -38,8 +38,8 @@ const Profilepage = () => {
                     style={{ height: "28px", width: "28px" }}>
                 </img>Following</button>
                 <hr></hr>
-                <button><img src='./assests/signout.png' className='btn-img' style={{ height: "24px", width: "28px" }}></img>Sign Out</button>
-               
+                <button><img src='./assests/signout.png' className='btn-img' style={{ height: "24px", width: "26px" }}></img>Sign Out</button>
+                <div style={{height: "300px"}}></div>
             </div>
         </div>
     )

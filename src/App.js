@@ -4,15 +4,19 @@ import Home from './client/components/Home';
 import SharedLayout from './client/components/SharedLayout';
 import DiscoverPage from './client/components/DiscoverPage';
 import Profilepage from './client/components/Profilepage';
+import Create from './client/components/create';
+
 
 
 function App() {
   return(
-    <Routes>
+    <Routes default="/home">
       <Route path="/" element={<SharedLayout/>}>
-        <Route path="/home" element={<Home/>}></Route>
+        <Route index element={<Home/>}></Route>
+        <Route path='/home' element={<Home/>}></Route>
         <Route path="/discover" element={<DiscoverPage/>}></Route>
         <Route path="/profile" element={<Profilepage/>}></Route>
+        <Route path="/create" element={<Create/>}></Route>
       </Route>
     </Routes>
   )

@@ -16,13 +16,15 @@ const Navbar = () => {
     const handleSignupClick = () => {
         let username = document.getElementById('username1').value;
         let password = document.getElementById('pass1').value;
+        let d = new Date();
 
-        console.log(username, password);
+        let j = `${d.getUTCDate()}, ${d.getUTCMonth() + 1}, ${d.getUTCFullYear()}`
 
         //For POST request body
         let userData = {
             username: username,
-            password: password
+            password: password,
+            joined: j
         }
 
         //Request to server to add data
@@ -126,7 +128,9 @@ const Navbar = () => {
 
             {isLoggedin ?
                 <div className='pro-div'>
-                    <button className='login-div' onClick={handleOpen}>Create</button>
+                    <Link to="/create">
+                        <button className='login-div'>Create</button>
+                    </Link>
                     <Link to="/profile">
                         <button className='signup-div'>Profile</button>
                     </Link>
