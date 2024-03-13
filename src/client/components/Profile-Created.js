@@ -1,16 +1,17 @@
 
 import '../styles/profilepage.css';
-import '../styles/saved.css'
-const Saved = () =>{
+import '../styles/profile-created.css'
+const Created = () =>{
+
     return(
         <div className="changable-div">
             <div className='main-container'>
                 <div className='heading'>
-                    <h1> SAVED BLOGS </h1>
+                    <h1> CREATED BLOGS </h1>
                 </div>
                 <div className='cards'>
                     <div className="container">
-
+                        
                     </div>
                     <div className="container">
                         
@@ -24,4 +25,4 @@ const Saved = () =>{
     )
 }
 
-export default Saved;
+export default Created;
