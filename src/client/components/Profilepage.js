@@ -13,10 +13,6 @@ const Profilepage = () => {
     const [isFollowing, setFollowing] = useState(false);
     const [isCreated,setCreated] = useState(false);
 
-    const [users, setUsers]=useState([])
-
-    const [profiles, setProfiles]=useState([])
-
     async function fetchData(username){
     let response=await fetch(`http://localhost:6000/user?name=${username}`);
     let data=await response.json();
