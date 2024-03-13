@@ -1,3 +1,4 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -25,7 +26,12 @@ mongoose.connect(dbUrl);
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
-    joined: String
+    joined: String,
+    about: String,
+    profilepic: String,
+    created: String,
+    following: String,
+    saved: String
 });
 
 
@@ -101,8 +107,6 @@ app.get('/user', async(req,res)=>{
     }
 })
 
-
-
-app.listen(5000, () => {
-    console.log("Server listening to port ", 5000);
+app.listen(6010, () => {
+    console.log("Server listening to port ", 6010);
 })
