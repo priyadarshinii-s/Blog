@@ -110,7 +110,7 @@ const DiscoverPage = () => {
                                         <p>{e.Author}</p>
                                     </div>
                                     </div>
-                                    <button className='follow-btn'>Follow</button>
+                                    
                                 </div>
                                 <div className="details">
                                     <div className="details-container">
