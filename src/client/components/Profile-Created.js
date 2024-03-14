@@ -22,7 +22,7 @@ const Created = () =>{
     }, []);
 
     const handleClick = (e) => {
-        window.location = `/editpost/id/${e.replaceAll('/','-')}`;
+       window.location = `/post/id/${e.replaceAll('/','-')}`;
     }
 
     const createDate = (d) =>{   
