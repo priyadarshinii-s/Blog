@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import '../styles/profilepage.css';
 import Profile from './profile';
-import Saved from './saved';
-import Follow from './follow';
 import Created from './Profile-Created';
 
 
@@ -25,14 +23,8 @@ const Profilepage = () => {
                 {isProfile &&
                 <Profile/>
                 }
-                 {isSaved&&
-                <Saved/>
-                }
                  {isCreated&&
                 <Created/>
-                }
-                 {isFollowing &&
-                <Follow/>
                 }
             </div>
 
