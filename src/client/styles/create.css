@@ -140,7 +140,7 @@
         font-style: italic;
         padding: 10px;
         resize: none;
-        color: rgb(108, 108, 108);
+        color: #6c6c6c;
         border: none;
         outline: none; 
         margin-left: 4%;
@@ -151,10 +151,11 @@
     border: none;
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .blog-content-img{
-    margin-top: 8%;
+    margin-top: 6%;
     max-height: 466px;
 
 }
@@ -166,12 +167,38 @@
     width: 100%;
     height: 100%;
 }
+
+.label-upload{
+
+}
+.label-upload input{
+    display: none;
+}
+.label-upload img{
+    border-radius: 50%;
+    border: 1.6px solid #3adb32;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-upload button:hover{
+    border: 1.6px solid #15b200;
+}
+
 .blog-content-code {
     margin: 3% 3% 0 13%;
     width: 600px;
     border: none;
     height: 250px;
     border-radius: 10px;
+    display: flex;
 }
 .blog-content-code textarea{
     font-family: "Roboto", sans-serif;
@@ -192,6 +219,7 @@
     height: 55px;
     border: none;
     max-height: 100px;
+    display: flex;
 }
 .blog-content-sub textarea{
     font-family: "Roboto", sans-serif;
@@ -209,6 +237,7 @@
     margin-left: 8%;
     height: 300px;
     border: none;
+    display: flex;
 }
 .blog-content-para textarea{
     font-family: "Lora", serif;
@@ -220,3 +249,62 @@
     height: 100%;
     outline: none;   
 }
+.post-btn{
+    font-family: "Roboto", sans-serif;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    outline: #3adb32 2px solid;
+    font-size: 18px;
+    color: #3adb32;
+    cursor: pointer;
+    background-color: transparent;
+}
+.post-btn:hover{
+    background-color: #3adb32;
+    color: rgb(255, 255, 255);
+}
+
+.dlt-btn{
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    padding: 4px;
+    cursor: pointer;
+}
+.add-btn{
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.add-btn img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.theme-input{
+    font-family: "Roboto", sans-serif;
+    outline: none;
+    height: 25px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 5px;
+     border: none;
+}
+.theme{
+    font-family: "Roboto", sans-serif;
+    color: "#6c6c6c";
+    font-size: 20px;
+}
+
+.theme-div{
+    display:flex;
+    width: 100%;
+    justify-content:center;
+    align-items:center;
+    height: 50px;
+}
+

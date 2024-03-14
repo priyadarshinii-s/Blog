@@ -3,25 +3,20 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 
+
 var months = [ "January", "February", "March", "April", "May", "June", 
            "July", "August", "September", "October", "November", "December" ];
 
-//Intiating Express Server
 const app = express();
 
-//To parse the JSON format data
 app.use(express.json());
 
-//CORS -> Cross Origin Resource Sharing, used to request resources (such as APIs or static files) from each other's domains
 app.use(cors())
 
-//Url for connnecting the MongoDB Atlas
 const dbUrl = "mongodb+srv://arul_08:Arul123@cluster0.57wnpn0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-//Connecting MongoDB
 mongoose.connect(dbUrl);
 
-//Schema structure
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -34,12 +29,21 @@ const userSchema = new mongoose.Schema({
 });
 
 
-//Model for inserting data with the given schema 
-//MongoDB by default creates a collection with plural name of the Model
+const blogPostSchema = new mongoose.Schema({
+    id: String,
+    Title: String,
+    Subtext: String,
+    tag: String,
+    Author: String,
+    dateCreated: { type: Date, default: Date.now },
+    content: Object,
+});
+
+const BlogPost = mongoose.model('BlogPost', blogPostSchema);
+
+
 const User = new mongoose.model('User', userSchema);
 
-
-//POST method request for Login
 app.post('/auth/login', async(req,res)=>{
     let userName = req.body.username;
     let passWord = req.body.password;   
@@ -47,7 +51,6 @@ app.post('/auth/login', async(req,res)=>{
     try{
         let user = await User.findOne({username: userName});
 
-        //Comparing the user entered password and stored password(hashed)
         let passwordMatched = await bcrypt.compare(passWord, user.password);
 
         if(!user || !passwordMatched){
@@ -60,7 +63,7 @@ app.post('/auth/login', async(req,res)=>{
     }
 });
 
-//POST method for signup
+
 app.post('/auth/signup', async(req,res) =>{
     let userName = req.body.username;
     let passWord = req.body.password; 
@@ -68,7 +71,6 @@ app.post('/auth/signup', async(req,res) =>{
     let j = join.split(',');
     let joinDate = `${j[0]} ${months[ j[1] - 1 ]} ${j[2]}`;
     
-    //Hashing the password for security purpose
     const hashedPassword = await  bcrypt.hash(passWord, 10);
 
     try{
@@ -104,8 +106,127 @@ app.get('/user', async(req,res)=>{
     catch(e){
         res.status(402).json({message: "Server Error"});
     }
+});
+
+
+app.post('/post/upload', async(req,res)=>{
+
+   const hashedId = await  bcrypt.hash(req.body.Title, 10);
+
+    let val = req.body;
+    val = {...val, id: hashedId}
+    
+
+    if(req.body){
+        let newBlog = new BlogPost(val);
+    await newBlog.save().then(()=>{
+        res.json({message: "Upload success"});
+    })
+    }
+    else{
+        res.status(304).send({message: "error"})
+    }
 })
 
-app.listen(6010, () => {
-    console.log("Server listening to port ", 6010);
+
+app.get('/post', async(req,res)=>{
+    let t = req.query.tag;
+    try{
+    let posts = await BlogPost.find({tag: t});
+    if(posts)
+        res.status(201).json(posts);
+    else
+        res.status(404).json({message: "Post not found"}); 
+    }
+    catch(e){
+        res.status(402).json({message: "Server Error"});
+    }
+})
+
+app.get('/posts', async(req,res)=>{
+    let id = req.query.id;
+   
+    let posts = await BlogPost.find({id: id});
+    if(posts)
+        res.status(201).json(posts);
+    else{
+        res.status(404).json({message: "Posts not found"}); 
+    }
+})
+
+app.get('/allposts', async(req,res)=>{
+
+    let posts = await BlogPost.find();
+    if(posts)
+        res.status(201).json(posts);
+    else{
+        res.status(404).json({message: "Posts not found"}); 
+    }
+});
+
+app.get('/search', async (req, res) => {
+    const { keyword } = req.query;
+    try {
+        const matchedPosts = await BlogPost.find({ Title: { $regex: keyword, $options: 'i' } });
+        
+        res.json(matchedPosts);
+    } catch (err) {
+        console.error("Error searching posts:", err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.get('/saved', async (req, res) => {
+    const { user } = req.query;
+    try {
+        const matchedPosts = await BlogPost.find({ Author: user});
+       
+        res.json(matchedPosts);
+    } catch (err) {
+        console.error("Error searching posts:", err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.put('/user/:id', async (req, res) => {
+    const userId = req.params.id;
+    const { username, about, profilepic } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        const result = await BlogPost.updateMany({ _id: userId }, { $set: { Author: username}});
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.username = username || user.username;
+        user.about = about || user.about;
+        user.profilepic = profilepic || user.profilepic;
+
+        await user.save();
+
+        res.status(200).json({ message: "User data updated successfully" });
+    } catch (error) {
+        console.error("Error updating user data:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+app.delete('/deletepost', async (req, res) => {
+    const postId = req.query.id;
+
+
+    try {
+        await BlogPost.deleteOne({id: postId});
+        res.status(201).send({message: "Deleted"});
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+
+
+app.listen(5000, () => {
+    console.log("Server listening to port ", 5000);
 })

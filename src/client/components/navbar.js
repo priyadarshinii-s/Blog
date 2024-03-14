@@ -1,18 +1,29 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import '../styles/nav.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from './loggedUser';
+
 
 const Navbar = () => {
-
     const [showModal, setShowModal] = useState(false);
     const [showModalSignUp, setShowModalSignUp] = useState(false);
     const [isLoggedin, setIsLoggedin] = useState(false);
-    const [loggedUser,setLoggedUser] = useState('');
+
+    const { loggedUser,setLoggedUser } = useUser();
+
+    useEffect(() => {
+        const username = localStorage.getItem('username');
+        if (username) {
+            setIsLoggedin(true);
+            setLoggedUser(username);
+        }
+        else{
+            setIsLoggedin(false);
+        }
+    }, []);
 
 
-
-    //SignUP Handler
     const handleSignupClick = () => {
         let username = document.getElementById('username1').value;
         let password = document.getElementById('pass1').value;
@@ -20,14 +31,12 @@ const Navbar = () => {
 
         let j = `${d.getUTCDate()}, ${d.getUTCMonth() + 1}, ${d.getUTCFullYear()}`
 
-        //For POST request body
         let userData = {
             username: username,
             password: password,
             joined: j
         }
 
-        //Request to server to add data
         axios.post('http://localhost:5000/auth/signup', userData)
             .then((response) => {
                 window.alert("Registered Successfully!!");
@@ -41,19 +50,21 @@ const Navbar = () => {
     const handleLoginClick = () => {
         let username = document.getElementById('username').value;
         let password = document.getElementById('pass').value;
-        //For POST request body
+      
         let userData = {
             username: username,
             password: password
         }
-        //Request to server to add data
+       
         axios.post('http://localhost:5000/auth/login', userData)
             .then((response) => {
                 if (response.data.message === "valid-user") {
                     setIsLoggedin(true);
                     setLoggedUser(response.data.username);
+                    localStorage.setItem('username',response.data.username);
                     handleClose();
                 }
+                
                 console.log(response.data.username);
             })
             .catch((err) => {
@@ -115,7 +126,6 @@ const Navbar = () => {
 
             <div className='logo-div'>
                 <h1>H A M S</h1>
-                {/* <img src="./assests/logo.png" className='logo-pic'></img> */}
             </div>
             <div className='route-div'>
                 <Link to="/home">

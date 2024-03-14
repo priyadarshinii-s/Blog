@@ -1,46 +1,63 @@
-
-import { type } from '@testing-library/user-event/dist/type';
 import '../styles/create.css';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { useUser } from './loggedUser';
 
 
 const Create = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [contentCount, setContentCount] = useState(0);
-    const [contentList,setContentList] = useState([]);
+    const [contentList, setContentList] = useState([]);
+    const [isImageClicked, setIsImageClicked] = useState(false);
+    const [isstat, setStat] = useState(false);
 
-    const PhotoDiv = (ind) => 
-    <div className='blog-content-img' key={ind}> <img src='./assests/test.jpg'/> </div>;
-    const CodeDiv = (ind) => 
-    <div className='blog-content-code' key={ind}>
-        <textarea autoFocus={true} placeholder='Enter your code.....'></textarea>
-    </div>;
-    const SubDiv = (ind) => 
-    <div className='blog-content-sub'  key={ind}>
-        <textarea autoFocus={true} placeholder='Sub-title'></textarea>
-    </div>;
-    const ParaDiv = (ind) => 
-    <div className='blog-content-para' key={ind}>
-        <textarea autoFocus={true} placeholder='Description'></textarea>
-    </div>;
+    const { loggedUser } = useUser();
 
-    const addPhoto = () => {
-        setContentCount(contentCount + 1);
-        setContentList([...contentList,PhotoDiv(contentCount)]);
-    };
-    const addCode = () => {
-        setContentCount(contentCount + 1);
-        setContentList([...contentList,CodeDiv(contentCount)]);
+    const postClicked = async () => {
+        let tit = document.getElementById('title').value;
+        let sub = document.getElementById('subtext').value;
+        let the = document.getElementById('theme').value;
+        let postData;
+        if(loggedUser){
+             postData = {
+                Title: tit,
+                Subtext: sub,
+                tag: the,
+                Author: loggedUser,
+                content: contentList
+            }
+        }
+        else{
+            window.alert("Login First to create post");
 
+        }
+        await axios.post('http://localhost:5000/post/upload',postData)
+        .then((response) => {
+            window.alert("Upload Success");
+            window.location.reload();
+        })
+        .catch((err) => {
+            window.alert("Username already Exist!!", err);
+        })
+
+    }
+
+    const handleDelete = (id) => {
+        setContentList(contentList.filter((item) => {
+            if (item.id.i !== id.i) return item;
+        }));
     };
-    const addSub = () => {
-        setContentCount(contentCount + 1);
-        setContentList([...contentList,SubDiv(contentCount)]);
-    };
-    const addPara = () => {
-        setContentCount(contentCount + 1);
-        setContentList([...contentList,ParaDiv(contentCount)]);
-    };
+
+
+    const Clicked = (type) => {
+        let c = contentList;
+        let i = uuidv4();
+        c.push(
+            { title: type, data: '', id:`${i}` }
+        );
+        setContentList(c);
+        setStat(!isstat);
+    }
 
 
     return (
@@ -48,21 +65,104 @@ const Create = () => {
             <div className='create-page-tit'>
                 <h1>Craft Your Story, Share Your Voice<br />Start Blogging Today!</h1>
             </div>
-
-
-            {/* <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                    <img src='./assests/create.png' style={{height: "400px", width: "400px"}}>
-                    </img>
-                </div>
-                <button className='get-started-btn'>Get Started</button> */}
-
             <div className='main-component1'>
                 <div className='head-top'>
-                    <textarea type="text" className='blog-title' autoFocus={true} placeholder='Title'></textarea>
-                    <textarea type="text" className='blog-subtext' placeholder='Subline'></textarea>
+                    <textarea type="text" className='blog-title' id="title" autoFocus={true} placeholder='Title'></textarea>
+                    <textarea type="text" className='blog-subtext'id="subtext" placeholder='Subline' key="56758"></textarea>
+                    <div className='theme-div'>
+                        <p className='theme'>Theme : &nbsp;</p>
+                        <input className ="theme-input" id="theme" placeholder="Enter the theme" type='text'></input>
+                    </div>
                 </div>
+
                 <div className='blog-main'>
-                    {contentList}
+                    {contentList.map((e) => {
+                        if (e.title) {
+                            let type = e.title;
+                            if (type === 'image') {
+                                return (
+                                    <div className='blog-content-img' id={e.id}>
+                                        <img src={e.data} alt="Invalid url / paste the Image address" />
+                                        <button onClick={() => handleDelete(e.id)} className='dlt-btn'>
+                                            <img src='./assests/delete.png'></img>
+                                        </button>
+                                    </div>
+                                )
+                            }
+                            if (type === 'code') {
+                                return (
+                                    <div className='blog-content-code' id={e.id} key={e.id}>
+                                        <textarea autoFocus={true} placeholder='Enter your code.....' id='code-text'></textarea>
+                                        <button onClick={() => {
+                                            e.data = document.getElementById('code-text').value;
+                                            setStat(!isstat)
+                                        }} className='add-btn'>
+                                            {e.data.length > 0 ? <img src='./assests/tick-fill.png'></img> : <img src='./assests/add.png'></img>} 
+                                        </button>
+                                        <button className='dlt-btn' onClick={() => handleDelete(e.id)}>
+                                            <img src='./assests/delete.png'></img>
+                                        </button>
+                                    </div>
+                                )
+                            }
+                            if (type === 'subTitle') {
+                                return (
+                                    <div className='blog-content-sub' id={e.id} key={e.id}>
+                                        <textarea autoFocus={true} placeholder='Sub-title' id="sub-title" className='subTitle-Des'></textarea>
+                                        <button onClick={() => {
+                                            e.data = document.getElementById('sub-title').value;
+                                            setStat(!isstat);
+                                        }} className='add-btn'>
+
+                                        {e.data.length > 0 ? <img src='./assests/tick-fill.png'></img> : <img src='./assests/add.png'></img>}
+
+                                        </button>
+                                        <button className='dlt-btn' onClick={() => handleDelete(e.id)}>
+                                            <img src='./assests/delete.png'></img>
+                                        </button>
+                                    </div>
+                                )
+                            }
+                            if (type === 'para'){
+                                return  (
+                                    <div className='blog-content-para' id={e.id} key={e.id}>
+                                    <textarea autoFocus={true} id='des-text' placeholder='Description'></textarea>
+                                    <button onClick={() => {
+                                            e.data = document.getElementById('des-text').value;
+                                            setStat(!isstat);
+                                        }} className='add-btn'>
+
+                                        {e.data.length > 0 ? <img src='./assests/tick-fill.png'></img> : <img src='./assests/add.png'></img>}
+
+                                        </button>
+                                        <button className='dlt-btn' onClick={() => handleDelete(e.id)}>
+                                            <img src='./assests/delete.png'></img>
+                                        </button>
+                                    </div>
+                                )
+                            }
+                        }
+                    })}
+
+
+                    {isImageClicked &&
+                        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <p style={{ fontFamily: "Roboto, sans-serif", color: "#6c6c6c", fontSize: '18px' }}>
+                                Paste the Image Address :&nbsp;</p>
+                            <input type='text' id="img-link" style={{ height: "40px", width: "60%" }} />
+                            <button onClick={() => {
+                                let c = contentList;
+                                let i = uuidv4();
+                                c.push(
+                                    { title: 'image', data: document.getElementById('img-link').value, id: { i } }
+                                );
+                                setContentList(c);
+                                setIsImageClicked(false);
+                            }} className='add-btn'>
+                                <img src='./assests/add.png'></img>
+                            </button>
+                        </div>
+                    }
 
                     <div className='multiple-button'>
                         <div className='fixed-button'>
@@ -72,11 +172,15 @@ const Create = () => {
                         </div>
                         <div className='move-button'>
                             {isOpen && (<div className='buttons-div'>
-                                <button  onClick={addPhoto}><img src='./assests/photo.png' className='icon' /> </button>
-                                <button onClick={addCode}><img src='./assests/code.png' className='icon' /></button>
-                                <button onClick={addSub}><img src='./assests/sub.png' className='icon' /></button>
-                                <button onClick={addPara}><img src='./assests/para.png' className='icon' /></button>
+                                <button onClick={() => setIsImageClicked(true)}><img src='./assests/photo.png' className='icon' /></button>
+                                <button onClick={() => Clicked('code')}><img src='./assests/code.png' className='icon' /></button>
+                                <button onClick={() => Clicked('subTitle')}><img src='./assests/sub.png' className='icon' /></button>
+                                <button onClick={() => Clicked('para')}><img src='./assests/para.png' className='icon' /></button>
                             </div>)}
+                        </div>
+
+                        <div style={{ position: "absolute", bottom: 1, right: 0 }}>
+                            <button className='post-btn' onClick={postClicked}>Post</button>
                         </div>
                     </div>
                 </div>

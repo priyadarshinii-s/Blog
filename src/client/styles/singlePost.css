@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dis2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.main-component2{
+    width: 900px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8%;
+    margin-bottom: 10%;
+    justify-content: space-around;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 20px 0px rgb(210, 210, 210);
+    border-radius: 8px;
+}
+
+.head-top1{
+    height: 300px;
+    width: 100%;
+    margin-top: 5%;
+}
+
+.blog-main1{
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
+.blog-title1{
+    font-family: "Roboto", sans-serif;
+    height: 100px;
+    font-size: 42px;
+    font-weight: 800;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    border: none;
+    outline: none;
+    letter-spacing: 1px; 
+  }
+
+.blog-subtext1{
+        font-family: "Lora", serif;
+        height: 120px;
+        font-size: 24px;
+        width: 90%;
+        font-style: italic;
+        padding: 10px;
+        resize: none;
+        color: #6c6c6c;
+        border: none;
+        outline: none; 
+        margin-left: 4%;
+        letter-spacing: 1px;
+        margin-top: 3%;
+}
+
+.theme1{
+    font-family: "Roboto", sans-serif;
+    color: "#6c6c6c";
+    font-size: 20px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: rgba(80, 80, 80, 0.766);
+}
+
+
+.theme-div1{
+    display:flex;
+    width: 85%;
+    margin-left: 4%;
+    justify-content:space-between;
+    align-items:center;
+    height: 50px;
+    border-top: 1px solid #6c6c6c74;
+    border-bottom: 1px solid #6c6c6c74;
+}
+
+.blog-content-para1{
+    margin-top: 3%;
+    margin-left: 8%;
+    max-height: 900px;
+    border: none;
+}
+
+.blog-content-para1 p{
+    font-family: 'Lora', sans-serif;
+    font-size: 20px;
+    display: inline;
+}
+
+.blog-content-sub1{
+    margin-top: 8%;
+    margin-left: 4%;
+    height: 55px;
+    border: none;
+    max-height: 100px;
+}
