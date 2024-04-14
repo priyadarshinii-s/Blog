@@ -11,7 +11,7 @@ const DiscoverPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://blog-2-orjh.onrender.com/allposts');
+                const response = await axios.get('https://blog-4-7bie.onrender.com/allposts');
                 const postData = response.data;
                 setContent(postData);
             } catch (error) {
@@ -40,7 +40,7 @@ const DiscoverPage = () => {
 
         if(val === 'All'){
             try {
-                const response = await axios.get('http://localhost:5000/allposts');
+                const response = await axios.get('https://blog-4-7bie.onrender.com/allposts');
                 const postData = response.data;
                 setContent(postData);
             } catch (error) {
@@ -49,7 +49,7 @@ const DiscoverPage = () => {
             }
         else{
             try {
-                const response = await axios.get(`http://localhost:5000/post?tag=${val}`);
+                const response = await axios.get(`https://blog-4-7bie.onrender.com/post?tag=${val}`);
                 const postData = response.data;
                 setContent(postData);
             } catch (error) {
@@ -61,7 +61,7 @@ const DiscoverPage = () => {
     const search = async() =>{
          let keyword = document.getElementById('search-ele').value;
          try {
-            const response = await axios.get(`http://localhost:5000/search?keyword=${keyword}`);
+            const response = await axios.get(`https://blog-4-7bie.onrender.com/search?keyword=${keyword}`);
             const postData = response.data;
             setContent(postData);
         } catch (error) {
