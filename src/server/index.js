@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+require('dotenv').config()
 
 
 var months = [ "January", "February", "March", "April", "May", "June", 
@@ -13,9 +14,7 @@ app.use(express.json());
 
 app.use(cors())
 
-const dbUrl = "mongodb+srv://arul_08:Arul123@cluster0.57wnpn0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
-mongoose.connect(dbUrl);
+mongoose.connect(process.env.MONGO_URL);
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -227,6 +226,6 @@ app.delete('/deletepost', async (req, res) => {
 })
 
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server listening to port ", 5000);
 })
