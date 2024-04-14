@@ -14,7 +14,7 @@ const Singlepost = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/posts?id=${id.replaceAll('-','/')}`);
+                const response = await axios.get(`https://blog-4-7bie.onrender.com/posts?id=${id.replaceAll('-','/')}`);
                 const postData = response.data[0];
                 
                 setTitle(postData.Title);
