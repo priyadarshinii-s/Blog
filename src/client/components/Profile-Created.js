@@ -10,7 +10,7 @@ const Created = () =>{
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/saved?user=${loggedUser}`);
+                const response = await axios.get(`https://blog-4-7bie.onrender.com/saved?user=${loggedUser}`);
                 const postData = response.data;
                 setContent(postData);
             } catch (error) {
@@ -36,7 +36,7 @@ const Created = () =>{
 
     const handleDelete = async(id) =>{
         try {
-            const response = await axios.delete(`http://localhost:5000/deletepost?id=${id}`);
+            const response = await axios.delete(`https://blog-4-7bie.onrender.com/deletepost?id=${id}`);
             if(response.data.message === "Deleted"){
                 window.location.reload();
             }
