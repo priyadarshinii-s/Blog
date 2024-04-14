@@ -37,7 +37,7 @@ const Navbar = () => {
             joined: j
         }
 
-        axios.post('http://localhost:5000/auth/signup', userData)
+        axios.post('https://blog-4-7bie.onrender.com/auth/signup', userData)
             .then((response) => {
                 window.alert("Registered Successfully!!");
                 handleCloseModel();
@@ -56,7 +56,7 @@ const Navbar = () => {
             password: password
         }
        
-        axios.post('http://localhost:5000/auth/login', userData)
+        axios.post('https://blog-4-7bie.onrender.com/auth/login', userData)
             .then((response) => {
                 if (response.data.message === "valid-user") {
                     setIsLoggedin(true);
