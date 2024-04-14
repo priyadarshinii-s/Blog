@@ -31,7 +31,7 @@ const Create = () => {
             window.alert("Login First to create post");
 
         }
-        await axios.post('http://localhost:5000/post/upload',postData)
+        await axios.post('https://blog-4-7bie.onrender.com/post/upload',postData)
         .then((response) => {
             window.alert("Upload Success");
             window.location.reload();
