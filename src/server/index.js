@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cors())
 
-const dbUrl = ""
+const dbUrl = "mongodb+srv://arul_08:Arul123@cluster0.57wnpn0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 mongoose.connect(dbUrl);
 
