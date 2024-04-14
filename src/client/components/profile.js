@@ -17,7 +17,7 @@ const Profile = () => {
 
     async function fetchData(loggedUser) {
         try {
-            const response = await axios.get(`http://localhost:5000/user?name=${loggedUser}`);
+            const response = await axios.get(`https://blog-4-7bie.onrender.com/user?name=${loggedUser}`);
             const data = response.data;
             setUser(data);
         } catch (error) {
@@ -41,7 +41,7 @@ const Profile = () => {
                 return;
             }
     
-            await axios.put(`http://localhost:5000/user/${user._id}`, editProfileData);
+            await axios.put(`https://blog-4-7bie.onrender.com/user/${user._id}`, editProfileData);
             fetchData(loggedUser);
             handleClose();
         } catch (error) {
