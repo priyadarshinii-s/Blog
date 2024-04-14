@@ -11,7 +11,7 @@ const DiscoverPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/allposts');
+                const response = await axios.get('https://blog-2-orjh.onrender.com/allposts');
                 const postData = response.data;
                 setContent(postData);
             } catch (error) {
